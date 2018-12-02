@@ -1,3 +1,12 @@
+Setup
+=====
+1. Install [pipenv](https://pipenv.readthedocs.io/en/latest/)
+
+2. Install dependencies
+
+    ```
+    pipenv install
+    ```
 
 Testing
 =======

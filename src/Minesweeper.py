@@ -1,13 +1,11 @@
 from random import shuffle
 from itertools import product
+from .Grid import Grid
 
 class Minesweeper:
 
     def __init__(self, num_cols, num_rows, num_mines=10):
-        if num_cols <= 0:
-            raise Exception('Number of columns must be positive')
-        if num_rows <= 0:
-            raise Exception('Number of rows must be positive')
+        self.grid = Grid(num_rows, num_cols)
         if num_mines >= num_cols * num_rows:
             raise Exception('Number of mines must not exceed board area')
 
@@ -18,7 +16,6 @@ class Minesweeper:
         self.has_ended = False
 
         self._has_started = False
-        self._init_empty_grid()
 
     
     def dig(self, coord):
@@ -27,10 +24,6 @@ class Minesweeper:
             self._init_mines(safe_coord=coord)
 
     
-    def _init_empty_grid(self):
-        self._grid = [[0] * self.num_cols for row in range(self.num_rows)]
-
-
     def _init_mines(self, safe_coord):
         safe_row, safe_col = safe_coord
 
@@ -53,10 +46,7 @@ class Minesweeper:
                 col = grid_index % self.num_rows
 
                 # Mines are represented as -1
-                self._grid[row][col] = -1
-
-        # Now initialize the numbers
-        self._init_numbers()
+                self.grid.place_mine((row, col))
 
 
     def _init_numbers(self):
